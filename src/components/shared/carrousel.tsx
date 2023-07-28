@@ -1,20 +1,26 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import type Splide from '@splidejs/splide'
-import Image from 'next/image'
+import { type ReactNode, useEffect, useRef } from 'react'
+import type * as splide from '@splidejs/splide'
 
-const Carrousel = () => {
+interface Props {
+  className?: string
+  children?: ReactNode
+}
+
+const CarrouselSlide = (props: Props) => (
+  <li className="splide__slide">
+    <div className={props.className}>{props.children}</div>
+  </li>
+)
+
+const Carrousel = (props: Props & { options?: splide.Options }) => {
   const divRef = useRef<HTMLDivElement>(null)
-  const splideRef = useRef<Splide | null>(null)
+  const splideRef = useRef<splide.Splide | null>(null)
 
   useEffect(() => {
     import('@splidejs/splide').then(({ default: Splide }) => {
-      splideRef.current = new Splide(divRef?.current!, {
-        rewind: true,
-        pagination: false
-      })
-
+      splideRef.current = new Splide(divRef?.current!, props.options)
       splideRef.current?.mount()
     })
 
@@ -24,7 +30,7 @@ const Carrousel = () => {
   }, [])
 
   return (
-    <div className="w-full aspect-[4_/_5]">
+    <div className={props.className}>
       <div
         ref={divRef}
         role="group"
@@ -32,32 +38,11 @@ const Carrousel = () => {
         aria-label="Mejores trabajos de Meche Styles"
       >
         <div className="splide__track">
-          <ul className="splide__list">
-            <li className="splide__slide">
-              <div className="w-full aspect-[4_/_5] relative">
-                <Image fill alt="" src="/images/home_hero_1.jpeg" />
-              </div>
-            </li>
-            <li className="splide__slide">
-              <div className="w-full aspect-[4_/_5] relative">
-                <Image fill alt="" src="/images/home_hero_2.jpeg" />
-              </div>
-            </li>
-            <li className="splide__slide">
-              <div className="w-full aspect-[4_/_5] relative">
-                <Image fill alt="" src="/images/home_hero_3.jpeg" />
-              </div>
-            </li>
-            <li className="splide__slide">
-              <div className="w-full aspect-[4_/_5] relative">
-                <Image fill alt="" src="/images/home_hero_4.jpeg" />
-              </div>
-            </li>
-          </ul>
+          <ul className="splide__list">{props.children}</ul>
         </div>
       </div>
     </div>
   )
 }
 
-export default Carrousel
+export { Carrousel, CarrouselSlide }

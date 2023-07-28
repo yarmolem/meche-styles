@@ -1,16 +1,15 @@
+import { Menu } from 'lucide-react'
+
 import {
   Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
   SheetTitle,
+  SheetHeader,
+  SheetContent,
   SheetTrigger
 } from '@src/components/ui/sheet'
+import { Logo } from './logo'
 import { Button } from '../ui/button'
-
-import Logo from './logo'
-import Container from './container'
-import { Menu } from 'lucide-react'
+import { Container } from './container'
 
 const Navbar = () => {
   return (
@@ -86,4 +85,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export { Navbar }

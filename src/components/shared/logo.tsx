@@ -4,4 +4,4 @@ const Logo = () => {
   return <Typography>MECHE</Typography>
 }
 
-export default Logo
+export { Logo }
